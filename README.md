@@ -57,7 +57,9 @@ assets/
   brand/                 Logos, marks, pictograms, motifs, rules
   fonts/                 Archivo and JetBrains Mono, WOFF2, self-hosted
   founders/              Drop the two portraits here. See its README
-  favicon/  social/  motion/
+  favicon/  social/
+.nojekyll                Disables Jekyll. Do not delete
+CNAME                    Binds the domain. Do not delete
 SETUP.md                 What still needs filling in. Read this first
 SECURITY.md              Security review, gaps and required actions
 ```
