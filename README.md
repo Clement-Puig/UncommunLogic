@@ -19,8 +19,16 @@ catalogue fetches a JSON file, which `file://` blocks.
 
 ## Deploy
 
-Push to `main`. GitHub Pages serves it. `CNAME` binds the domain, so do not
-delete or edit that file.
+Push to `main`. GitHub Pages serves it.
+
+Two files at the root are load-bearing and must never be deleted:
+
+- **`CNAME`** binds the custom domain. Deleting it, even for a moment, cancels
+  the TLS certificate that GitHub is provisioning for the domain. It has been
+  deleted three times already and that is why HTTPS took so long to work.
+- **`.nojekyll`** disables Jekyll. Without it, Pages runs Jekyll and silently
+  drops every file whose name starts with `_` or `.`, which removes
+  `/.well-known/security.txt` from the published site.
 
 ## What is where
 

@@ -131,7 +131,14 @@ deleted while the DNS `CNAME` still points at it, another GitHub user can claim
 the name and serve content on our domain. Do not delete the Pages site without
 first removing the DNS record.
 
-**E. No independent test.** No penetration test, no automated dependency
+**E. GitHub Pages runs Jekyll unless told not to.** Jekyll silently drops
+every file and directory whose name begins with `_` or `.`, which meant
+`/.well-known/security.txt` was not published even though it is in the
+repository. The root `.nojekyll` file disables Jekyll and publishes the tree
+exactly as committed. Do not delete it, and re-test `/.well-known/security.txt`
+after any change to the build.
+
+**F. No independent test.** No penetration test, no automated dependency
 scanning (there are no dependencies to scan), no third-party accessibility or
 security audit. This review is self-assessed.
 
@@ -171,8 +178,19 @@ the privacy and cookie notices to be updated **before** it ships:
 
 ## 6. Actions, in priority order
 
-1. Enable "Enforce HTTPS" in the repository's GitHub Pages settings. **Verify
-   this now**, it is a checkbox and it is the single most important control.
+1. **Provision the TLS certificate for the custom domain, and stop editing the
+   `CNAME` file.** As at 9 August 2026 `https://www.uncommunlogic.com` served
+   no valid certificate: the certificate presented was GitHub's own wildcard,
+   which does not cover this domain. The `CNAME` file had been created and
+   deleted three times, and every deletion cancels certificate provisioning.
+   Fix: leave `CNAME` alone, set the custom domain in Settings then Pages, wait
+   for the DNS check, then tick **Enforce HTTPS**.
+
+   While no certificate exists, the `upgrade-insecure-requests` directive in
+   the page policy rewrites every stylesheet, script, font and image request to
+   `https://`, where it fails. The site then serves as unstyled HTML. That is a
+   correct security directive meeting a broken certificate, not a fault in the
+   code, and it resolves itself the moment the certificate is issued.
 2. Turn on multi-factor authentication for every account with push access, and
    for the domain registrar.
 3. Add branch protection to `main`.
