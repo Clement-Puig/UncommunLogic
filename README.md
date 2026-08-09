@@ -1,6 +1,6 @@
-# Uncommon Logic
+# UncommonLogic
 
-Landing page statique pour une offre de conseil en automatisation IA et workflows.
+Site statique pour uncommonlogic.com présentant une offre de conseil en automatisation IA et workflows.
 
 ## Lancer localement
 
